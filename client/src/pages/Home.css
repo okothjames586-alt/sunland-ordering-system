@@ -1,0 +1,311 @@
+.home-page {
+  min-height: 100vh;
+}
+
+/* Sunland Bites Color Palette */
+:root {
+  --color-orange: #FF8C00;
+  --color-dark-green: #085E3C;
+  --color-light-green: #27AE60;
+  --color-cream: #FFF7E6;
+  --color-black: #222222;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--color-dark-green) 0%, var(--color-light-green) 100%);
+  color: white;
+  padding: 60px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70vh;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-circle {
+  width: 70px;
+  height: 70px;
+  background-color: var(--color-orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
+}
+
+.brand-highlight {
+  color: var(--color-orange);
+}
+
+.brand-tagline {
+  font-size: 1.2rem;
+  margin: 0.25rem 0 0 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.brand-tagline .highlight {
+  color: var(--color-orange);
+  font-weight: bold;
+}
+
+.hero-description {
+  font-size: 1rem;
+  margin: 2rem 0;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 28px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn-primary {
+  background-color: var(--color-orange);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #FF7700;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-secondary:hover {
+  background-color: white;
+  color: var(--color-dark-green);
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 30px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .hero-image img {
+    max-width: 420px;
+  }
+}
+
+/* Features Section */
+.features-section {
+  padding: 60px 20px;
+  background-color: var(--color-cream);
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: var(--color-dark-green);
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border-top: 4px solid var(--color-orange);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--color-dark-green);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.cta-section {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: var(--color-dark-green);
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.top-contact-banner {
+  background-color: rgba(255, 140, 0, 0.12);
+  color: var(--color-black);
+  padding: 16px 20px;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 140, 0, 0.25);
+}
+
+.top-contact-banner a {
+  color: var(--color-dark-green);
+  text-decoration: none;
+}
+
+.top-contact-banner a:hover {
+  text-decoration: underline;
+}
+
+.contact-section {
+  padding: 40px 20px;
+  background-color: #f9f4ea;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--color-dark-green);
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.contact-section p {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.contact-numbers {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.contact-numbers a {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-orange);
+  text-decoration: none;
+}
+
+.contact-numbers span {
+  color: #444;
+  font-size: 1.4rem;
+}
+
+.contact-note {
+  font-size: 0.95rem;
+  margin-top: 8px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .features-section h2,
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,62 @@
+import Order from '../models/Order.js';
+import { sendSMS } from '../services/smsService.js';
+
+// List orders with optional status filter (default: pending). Supports pagination via ?page & ?limit
+export const listOrders = async (req, res) => {
+  try {
+    const status = req.query.status || 'pending';
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, parseInt(req.query.limit, 10) || 20);
+    const skip = (page - 1) * limit;
+
+    const query = { status };
+
+    const [orders, total] = await Promise.all([
+      Order.find(query)
+        .populate('customer', 'name phone email')
+        .populate('items.menu', 'name price')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Order.countDocuments(query),
+    ]);
+
+    res.json({ orders, total, page, limit });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Approve an order: set to 'confirmed'
+export const approveOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const order = await Order.findByIdAndUpdate(orderId, { status: 'confirmed', updatedAt: Date.now() }, { new: true }).populate('customer');
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+
+    // Notify customer
+    try { await sendSMS(order.customer.phone, `Your order ${order.orderNumber} has been approved.`); } catch (e) { console.warn('SMS notify failed', e); }
+
+    res.json({ message: 'Order approved', order });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Decline an order: set to 'cancelled'
+export const declineOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const order = await Order.findByIdAndUpdate(orderId, { status: 'cancelled', updatedAt: Date.now() }, { new: true }).populate('customer');
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+
+    try { await sendSMS(order.customer.phone, `Your order ${order.orderNumber} has been declined.`); } catch (e) { console.warn('SMS notify failed', e); }
+
+    res.json({ message: 'Order declined', order });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export default { listOrders, approveOrder, declineOrder };

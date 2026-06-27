@@ -1,0 +1,24 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top left, rgba(255, 122, 0, 0.16), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(13, 95, 67, 0.12), transparent 16%),
+    var(--bg);
+  color: var(--text);
+}
+
+.main-content {
+  flex: 1;
+  padding: 110px 1.5rem 3rem;
+}
+.page-container {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 90px;
+  }
+}
