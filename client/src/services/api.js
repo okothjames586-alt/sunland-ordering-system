@@ -1,8 +1,29 @@
 import axios from 'axios';
 
-// Determine API base URL: env var > dynamic hostname > fallback to localhost
+const normalizeApiBaseUrl = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  const withoutTrailingSlash = trimmed.replace(/\/+$/, '');
+
+  if (/^https?:\/\//i.test(withoutTrailingSlash)) {
+    return withoutTrailingSlash.endsWith('/api')
+      ? withoutTrailingSlash
+      : `${withoutTrailingSlash}/api`;
+  }
+
+  return withoutTrailingSlash;
+};
+
+// Determine API base URL: env var > dynamic hostname > fallback to relative /api
 const getApiBaseUrl = () => {
-  const envUrl = process.env.REACT_APP_API_URL?.trim();
+  const envUrl = normalizeApiBaseUrl(process.env.REACT_APP_API_URL);
 
   if (envUrl) {
     return envUrl;
@@ -12,7 +33,7 @@ const getApiBaseUrl = () => {
     return '/api';
   }
 
-  return 'http://localhost:5000/api';
+  throw new Error('REACT_APP_API_URL is not set and window is unavailable.');
 };
 
 const API_BASE_URL = getApiBaseUrl();

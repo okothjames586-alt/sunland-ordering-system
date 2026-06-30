@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { config, mongoOptions } from './config/index.js';
 
 // Import routes
 import userRoutes from './routes/users.js';
@@ -38,18 +39,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database connection options
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/sunland-ordering';
-const mongoOptions = {
-  // time to attempt server selection before failing
-  serverSelectionTimeoutMS: 10000,
-  // use the new connection management engine
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+const mongoUri = config.mongodb.uri;
+const connectionOptions = {
+  ...mongoOptions,
+  dbName: config.mongodb.dbName
 };
 
 async function startServer() {
   try {
-    await mongoose.connect(mongoUri, mongoOptions);
+    await mongoose.connect(mongoUri, connectionOptions);
     console.log('MongoDB connected');
 
     const PORT = process.env.PORT || 5000;

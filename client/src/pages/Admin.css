@@ -7,38 +7,40 @@
 .admin-hero {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   align-items: stretch;
-  padding: 24px;
-  border-radius: 24px;
+  padding: 16px 18px;
+  border-radius: 18px;
   background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
   color: #f8fafc;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-  margin-bottom: 20px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+  margin: 0 auto 16px;
+  max-width: 760px;
 }
 
 .admin-hero-content {
-  flex: 1 1 420px;
+  flex: 1 1 320px;
 }
 
 .admin-hero h2 {
-  margin: 8px 0 10px;
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  margin: 6px 0 8px;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
 }
 
 .admin-hero p {
   margin: 0;
   color: rgba(248, 250, 252, 0.88);
-  line-height: 1.6;
+  line-height: 1.5;
+  font-size: 0.94rem;
 }
 
 .admin-hero-badge {
   display: inline-flex;
   align-items: center;
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.16);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -46,28 +48,28 @@
 
 .admin-hero-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(110px, 1fr));
-  gap: 10px;
-  min-width: min(100%, 320px);
+  grid-template-columns: repeat(3, minmax(84px, 1fr));
+  gap: 8px;
+  min-width: min(100%, 270px);
 }
 
 .admin-stat-card {
-  padding: 14px 12px;
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .admin-stat-card span {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   opacity: 0.8;
 }
 
 .admin-stat-card strong {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
 }
 
 .admin-stat-card.accent {
@@ -371,6 +373,7 @@
 @media (max-width: 860px) {
   .admin-hero {
     flex-direction: column;
+    padding: 14px 15px;
   }
 
   .admin-hero-stats {
@@ -380,11 +383,12 @@
 
 @media (max-width: 700px) {
   .admin-page {
-    padding: 16px;
+    padding: 12px;
   }
 
   .admin-hero {
-    padding: 18px;
+    padding: 12px;
+    border-radius: 14px;
   }
 
   .admin-hero-stats {

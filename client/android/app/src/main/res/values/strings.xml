@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SunlandBites</string>
+    <string name="title_activity_main">SunlandBites</string>
+    <string name="package_name">com.sunlandbites</string>
+    <string name="custom_url_scheme">com.sunlandbites</string>
+</resources>

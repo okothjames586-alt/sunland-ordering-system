@@ -55,6 +55,32 @@ const items = [
   { name: 'Balozi', description: 'Local craft beer Can', price: 250, category: 'Wines and Beers', image: 'https://via.placeholder.com/200' },
   { name: 'Smirnof Guarana', description: 'Local craft beer Can', price: 250, category: 'Wines and Beers', image: 'https://via.placeholder.com/200' },
   { name: 'Snap', description: 'Local craft beer Can', price: 250, category: 'Wines and Beers', image: 'https://via.placeholder.com/200' },
+
+  // Liquor items
+  { name: 'Johnny Walker Black 1L', description: 'Premium blended whisky', price: 5500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Johnny Walker Black 3/4', description: 'Premium blended whisky', price: 4800, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Johnny Walker Red 1L', description: 'Smooth blended whisky', price: 3200, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Johnny Walker Red 3/4', description: 'Smooth blended whisky', price: 2600, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Red Label', description: 'Blended whisky', price: 3000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Grants 1L', description: 'Classic blended whisky', price: 3000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Grants 3/4', description: 'Classic blended whisky', price: 2500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Jack Daniels 3/4', description: 'Tennessee whiskey', price: 4000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Martell VS 700ml', description: 'Fine cognac', price: 7000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Martell VS 1L', description: 'Fine cognac', price: 7800, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Hennessy', description: 'Premium cognac', price: 6500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Glenfiddich 12yrs 750ml', description: 'Single malt whisky', price: 8500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Glenfiddich 15yrs 750ml', description: 'Single malt whisky', price: 12000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Ballantines', description: 'Blended Scotch whisky', price: 3500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'VAT69 760ml', description: 'Blended whisky', price: 1900, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Amarula 750ml', description: 'Cream liqueur', price: 3000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Viceroy 3/4', description: 'Blended whisky', price: 1650, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Black and White 3/4', description: 'Blended whisky', price: 1500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'VAT 69 3/4', description: 'Blended whisky', price: 1900, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'VAT 69 1L', description: 'Blended whisky', price: 3000, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Singleton 12 Years', description: 'Single malt whisky', price: 6500, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Richot 3/4', description: 'Blended whisky', price: 1600, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Hunters Choice 3/4', description: 'Blended whisky', price: 1300, category: 'Liquor', image: 'https://via.placeholder.com/200' },
+  { name: 'Captain Morgan 3/4', description: 'Spiced rum', price: 1300, category: 'Liquor', image: 'https://via.placeholder.com/200' },
 ];
 
 async function run() {

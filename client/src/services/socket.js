@@ -1,6 +1,10 @@
 import io from 'socket.io-client';
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5000');
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'https://sunland-ordering-system.onrender.com';
+
+if (!SOCKET_URL) {
+  throw new Error('REACT_APP_SOCKET_URL is not set and socket URL cannot be determined.');
+}
 
 let socket = null;
 

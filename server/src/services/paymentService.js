@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const MPESA_API_URL = process.env.MPESA_API_URL || 'https://api.safaricom.co.ke/mpesa';
 const MPESA_OAUTH_URL = process.env.MPESA_OAUTH_URL || 'https://api.safaricom.co.ke/oauth/v1/generate';
-const MPESA_CALLBACK_URL = process.env.MPESA_CALLBACK_URL || `${process.env.API_URL || 'http://localhost:5000'}/api/payments/callback`;
+const MPESA_CALLBACK_URL = process.env.MPESA_CALLBACK_URL || `${process.env.API_URL || 'https://sunland-ordering-system.onrender.com'}/api/payments/callback`;
 const AIRTEL_API_URL = process.env.AIRTEL_API_URL || 'https://api.airtel.africa';
 const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || '';
 // Buy Goods number (shortcode/till) to use for Customer Buy Goods transactions

@@ -43,6 +43,18 @@ import guinessImage from '../assets/gs.jfif';
 import baloziImage from '../assets/balozi.jfif';
 import guaranaImage from '../assets/guarana.jfif';
 import snapImage from '../assets/snap.jfif';
+import jwBlackImage from '../assets/jw_black.jpg';
+import grantsImage from '../assets/grants.jpg';
+import jackDanielsImage from '../assets/jack_daniels.jpg';
+import martellVsImage from '../assets/martell_vs.jpg';
+import ballantinesImage from '../assets/ballantines.jpg';
+import amarulaImage from '../assets/amarula.jpg';
+import glenfiddichImage from '../assets/glenfiddich.jpg';
+import viceroyImage from '../assets/viceroy.jpg';
+import blackAndWhiteImage from '../assets/black_and_white.jpg';
+import richotImage from '../assets/richot.jpg';
+import huntersChoiceImage from '../assets/hunters_choice.webp';
+import captainMorganImage from '../assets/captain_morgan.jpg';
 
 
 const Menu = () => {
@@ -93,6 +105,28 @@ const Menu = () => {
     { _id: 43, category: 'Wines and Beers', name: 'Balozi', description: 'Local craft beer Can', price: 300, image: baloziImage },
     { _id: 44, category: 'Wines and Beers', name: 'Smirnof Guarana', description: 'Local craft beer Can', price: 300, image: guaranaImage },
     { _id: 45, category: 'Wines and Beers', name: 'Snap', description: 'Local craft beer Can', price: 300, image: snapImage },
+    { _id: 46, category: 'Liquor', name: 'Johnny Walker Black 1L', description: 'Premium blended whisky', price: 5500, image: jwBlackImage },
+    { _id: 47, category: 'Liquor', name: 'Johnny Walker Black 3/4', description: 'Premium blended whisky', price: 4800, image: jwBlackImage },
+    { _id: 48, category: 'Liquor', name: 'Johnny Walker Red 1L', description: 'Smooth blended whisky', price: 3200, image: `${publicUrl}/images/red-label.jfif` },
+    { _id: 49, category: 'Liquor', name: 'Johnny Walker Red 3/4', description: 'Smooth blended whisky', price: 2600, image: `${publicUrl}/images/red-label.jfif` },
+    { _id: 50, category: 'Liquor', name: 'Grants 1L', description: 'Classic blended whisky', price: 3000, image: grantsImage },
+    { _id: 51, category: 'Liquor', name: 'Grants 3/4', description: 'Classic blended whisky', price: 2500, image: grantsImage },
+    { _id: 52, category: 'Liquor', name: 'Jack Daniels 3/4', description: 'Tennessee whiskey', price: 4000, image: jackDanielsImage },
+    { _id: 53, category: 'Liquor', name: 'Martell VS 700ml', description: 'Fine cognac', price: 7000, image: martellVsImage },
+    { _id: 54, category: 'Liquor', name: 'Martell VS 1L', description: 'Fine cognac', price: 7800, image: martellVsImage },
+    { _id: 55, category: 'Liquor', name: 'Hennessy', description: 'Premium cognac', price: 6500, image: martellVsImage },
+    { _id: 56, category: 'Liquor', name: 'Glenfiddich 12yrs 750ml', description: 'Single malt whisky', price: 8500, image: glenfiddichImage },
+    { _id: 57, category: 'Liquor', name: 'Glenfiddich 15yrs 750ml', description: 'Single malt whisky', price: 12000, image: glenfiddichImage },
+    { _id: 58, category: 'Liquor', name: 'Ballantines', description: 'Blended Scotch whisky', price: 3500, image: ballantinesImage },
+    { _id: 60, category: 'Liquor', name: 'Amarula 750ml', description: 'Cream liqueur', price: 3000, image: amarulaImage },
+    { _id: 61, category: 'Liquor', name: 'Viceroy 3/4', description: 'Blended whisky', price: 1650, image: viceroyImage },
+    { _id: 62, category: 'Liquor', name: 'Black and White 3/4', description: 'Blended whisky', price: 1500, image: blackAndWhiteImage },
+    { _id: 63, category: 'Liquor', name: 'VAT 69 3/4', description: 'Blended whisky', price: 1900, image: `${publicUrl}/images/VAT-69.jfif` },
+    { _id: 64, category: 'Liquor', name: 'VAT 69 1L', description: 'Blended whisky', price: 3000, image: `${publicUrl}/images/VAT-69.jfif` },
+    { _id: 65, category: 'Liquor', name: 'Singleton 12 Years', description: 'Single malt whisky', price: 6500, image: `${publicUrl}/images/singleton-12-years.avif` },
+    { _id: 66, category: 'Liquor', name: 'Richot 3/4', description: 'Blended whisky', price: 1600, image: richotImage },
+    { _id: 67, category: 'Liquor', name: 'Hunters Choice 3/4', description: 'Blended whisky', price: 1300, image: huntersChoiceImage },
+    { _id: 68, category: 'Liquor', name: 'Captain Morgan 3/4', description: 'Spiced rum', price: 1300, image: captainMorganImage },
   ]);
 
   const addToCart = useCartStore((state) => state.addToCart);
@@ -115,7 +149,7 @@ const Menu = () => {
   //   fetchMenu();
   // }, []);
 
-  const categories = ['Food', 'Soft Drinks', 'Wines and Beers'];
+  const categories = ['Food', 'Soft Drinks', 'Wines and Beers', 'Liquor'];
   const groupedMenuItems = categories.map((category) => ({
     category,
     items: menuItems.filter((item) => item.category === category),

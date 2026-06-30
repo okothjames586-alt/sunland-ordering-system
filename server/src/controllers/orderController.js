@@ -41,6 +41,11 @@ export const createOrder = async (req, res) => {
       return await Menu.findOne({ name: { $regex: `^${escapedName}$`, $options: 'i' } });
     };
 
+    const normalizeName = (name) => {
+      if (!name) return '';
+      return name.toLowerCase().replace(/[^a-z0-9 ]+/g, '').replace(/\s+/g, ' ').trim();
+    };
+
     // Calculate total amount
     let totalAmount = 0;
     const orderItems = [];
@@ -60,6 +65,17 @@ export const createOrder = async (req, res) => {
       if (!menu && item.name) {
         menu = await findMenuByName(item.name);
         console.log(`Found menu by exact name "${item.name}":`, menu?.name);
+
+        // If still not found, try normalized-name lookup to catch spacing/case/punctuation variants
+        if (!menu) {
+          const target = normalizeName(item.name);
+          const allMenus = await Menu.find();
+          const matched = allMenus.find(m => normalizeName(m.name) === target);
+          if (matched) {
+            menu = matched;
+            console.log(`Found menu by normalized name "${item.name}" -> "${matched.name}":`, matched._id);
+          }
+        }
       }
 
       // If still not found, create a new menu item
