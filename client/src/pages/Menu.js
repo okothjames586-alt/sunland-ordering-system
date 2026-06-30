@@ -25,7 +25,8 @@ import dasaniWaterImage from '../assets/dasani_water.webp';
 import dasaniImage from '../assets/dasani.webp';
 import keringetImage from '../assets/keringet.jfif';
 import keringet1LImage from '../assets/keringet_l.jpg';
-import robertsonImage from '../assets/robertson.webp';
+import robertsonRedImage from '../assets/robertson_red.webp';
+import robertsonImage from '../assets/robertsonwhite.jpg';
 import frImage from '../assets/fr.jpg';
 import fwImage from '../assets/fw.jpg';
 import fourRedImage from '../assets/4r.jfif';
@@ -59,6 +60,7 @@ import captainMorganImage from '../assets/captain_morgan.jpg';
 
 const Menu = () => {
   const publicUrl = process.env.PUBLIC_URL || '';
+  const [selectedVariants, setSelectedVariants] = useState({});
   const [menuItems] = useState([
     { _id: 1, category: 'Food', name: 'Fish Boil', description: 'Fresh fish boiled to perfection', price: 300, image: `${publicUrl}/images/fish-boil.jfif` },
     { _id: 2, category: 'Food', name: 'Fish Dry Fry', description: 'Crispy dry fried fish', price: 300, image: `${publicUrl}/images/fish-dry-fry.jfif` },
@@ -76,10 +78,10 @@ const Menu = () => {
     { _id: 14, category: 'Food', name: 'Chapati', description: 'Fluffy flatbread', price: 50, image: `${publicUrl}/images/chapo.jfif` },
     { _id: 15, category: 'Food', name: 'Chips', description: 'Plain fried chips', price: 150, image: chipsPlain },
     { _id: 16, category: 'Food', name: 'Matumbo', description: 'Spiced Fresh Matumbo', price: 200, image: tumboPlain },
-    { _id: 17, category: 'Soft Drinks', name: 'Delmonte', description: 'Cold seasonal fresh juice', price: 400, image: delmonteMango },
-    { _id: 18, category: 'Soft Drinks', name: 'Minute Maid 400Ml', description: 'Chilled Local Minute Maid', price: 100, image: minutemaid },
-    { _id: 19, category: 'Soft Drinks', name: 'Minute Maid 1L', description: 'Cold', price: 250, image: mmImage },
-    { _id: 20, category: 'Soft Drinks', name: 'Soda 500Ml', description: 'Cold soda', price: 100, image: sodaImage },
+    { _id: 17, category: 'Soft Drinks', name: 'Delmonte', description: 'Cold seasonal fresh juice', price: 400, image: delmonteMango, variantOptions: ['Mango', 'Orange', 'Tropical', 'Passion', 'Apple'] },
+    { _id: 18, category: 'Soft Drinks', name: 'Minute Made 500ml', description: 'Chilled Local Minute Made', price: 100, image: minutemaid, variantOptions: ['Mango', 'Orange', 'Tropical', 'Passion', 'Apple'] },
+    { _id: 19, category: 'Soft Drinks', name: 'Minute Made 1L', description: 'Cold', price: 250, image: mmImage, variantOptions: ['Mango', 'Orange', 'Tropical', 'Passion', 'Apple'] },
+    { _id: 20, category: 'Soft Drinks', name: 'Soda 500ml', description: 'Cold soda', price: 100, image: sodaImage, variantOptions: ['Krest', 'Orange', 'Cocacola', 'Blackcurrent', 'Stony', 'Sprite'] },
     { _id: 21, category: 'Soft Drinks', name: 'Afia', description: 'Fresh Juice', price: 100, image: afiaImage },
     { _id: 22, category: 'Soft Drinks', name: 'Monster', description: 'Energy drink', price: 300, image: monsterImage },
     { _id: 23, category: 'Soft Drinks', name: 'RedBull', description: 'Energy drink', price: 300, image: redbullImage },
@@ -87,8 +89,9 @@ const Menu = () => {
     { _id: 25, category: 'Soft Drinks', name: 'Dasani 1L', description: 'Pure bottled water', price: 100, image: dasaniImage },
     { _id: 26, category: 'Soft Drinks', name: 'Keringet 500Ml', description: 'Chilled mineral water', price: 100, image: keringetImage },
     { _id: 27, category: 'Soft Drinks', name: 'Keringet 1L', description: 'Pure bottled water', price: 150, image: keringet1LImage },
-    { _id: 28, category: 'Wines and Beers', name: 'Robertson 750Ml', description: 'Smooth red wine', price: 1800, image: robertsonImage },
-    { _id: 29, category: 'Wines and Beers', name: 'Four Cousins', description: 'Red', price: 1300, image: frImage },
+    { _id: 28, category: 'Wines and Beers', name: 'Robertson 750Ml', description: 'Smooth red wine', price: 1800, image: robertsonRedImage },
+    { _id: 29, category: 'Wines and Beers', name: 'Robertson White 750Ml', description: 'Smooth white wine', price: 1800, image: robertsonImage },
+    { _id: 30, category: 'Wines and Beers', name: 'Four Cousins', description: 'Red', price: 1300, image: frImage },
     { _id: 30, category: 'Wines and Beers', name: 'Four Cousins', description: 'White', price: 1300, image: fwImage },
     { _id: 31, category: 'Wines and Beers', name: 'Fourth Street', description: 'Red', price: 1300, image: fourRedImage },
     { _id: 32, category: 'Wines and Beers', name: 'Fourth Street', description: 'White', price: 1300, image: fourWhiteImage },
@@ -131,8 +134,16 @@ const Menu = () => {
 
   const addToCart = useCartStore((state) => state.addToCart);
 
+  const handleVariantChange = (itemId, variant) => {
+    setSelectedVariants((prev) => ({ ...prev, [itemId]: variant }));
+  };
+
   const handleAddToCart = (item) => {
-    addToCart(item);
+    const selectedVariant = selectedVariants[item._id] || item.variantOptions?.[0] || '';
+    const cartItem = selectedVariant
+      ? { ...item, variant: selectedVariant, name: `${item.name} (${selectedVariant})` }
+      : item;
+    addToCart(cartItem);
     toast.success('Added to cart');
   };
 
@@ -164,15 +175,39 @@ const Menu = () => {
         <div key={category} className="menu-category-section">
           <h2 className="menu-category-title">{category}</h2>
           <div className="menu-items">
-            {items.map((item) => (
-              <div key={item._id} className="menu-item">
-                <img src={formatImageUrl(item.image)} alt={item.name} />
-                <h3>{item.name}</h3>
-                <p>{item.description}</p>
-                <p>Ksh {item.price}</p>
-                <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
-              </div>
-            ))}
+            {items.map((item) => {
+              const selectedVariant = selectedVariants[item._id] || item.variantOptions?.[0] || '';
+              const variantLabel = item.name?.toLowerCase().includes('delmonte')
+                ? 'Delmonte variety'
+                : item.name?.toLowerCase().includes('soda')
+                  ? 'Soda variety'
+                  : `${item.name} variety`;
+              return (
+                <div key={item._id} className="menu-item">
+                  <img src={formatImageUrl(item.image)} alt={item.name} />
+                  <h3>{item.name}</h3>
+                  <p>{item.description}</p>
+                  <p>Ksh {item.price}</p>
+                  {item.variantOptions?.length > 0 && (
+                    <div className="menu-item-variant">
+                      <label htmlFor={`variant-${item._id}`}>{variantLabel}</label>
+                      <select
+                        id={`variant-${item._id}`}
+                        value={selectedVariant}
+                        onChange={(event) => handleVariantChange(item._id, event.target.value)}
+                      >
+                        {item.variantOptions.map((variant) => (
+                          <option key={variant} value={variant}>
+                            {variant}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

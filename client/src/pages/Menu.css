@@ -73,6 +73,27 @@
   color: var(--primary-dark);
 }
 
+.menu-item-variant {
+  margin: 0.8rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.menu-item-variant label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.menu-item-variant select {
+  border: 1px solid rgba(15, 23, 42, 0.16);
+  border-radius: 999px;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
 .menu-item button {
   margin: 1.25rem 1.5rem 1.5rem;
   padding: 0.95rem 1rem;

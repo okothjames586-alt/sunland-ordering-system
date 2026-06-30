@@ -25,11 +25,12 @@ const Cart = () => {
               <div className="cart-item-details">
                 <h3>{item.name}</h3>
                 <p>Ksh {item.price}</p>
+                {item.variant && <p>Variant: {item.variant}</p>}
                 <div className="cart-item-controls">
-                  <button onClick={() => updateQuantity(item._id, (item.quantity || 1) - 1)}>-</button>
+                  <button onClick={() => updateQuantity(item.cartItemKey || item._id, (item.quantity || 1) - 1)}>-</button>
                   <span>{item.quantity || 1}</span>
-                  <button onClick={() => updateQuantity(item._id, (item.quantity || 1) + 1)}>+</button>
-                  <button onClick={() => removeFromCart(item._id)}>Remove</button>
+                  <button onClick={() => updateQuantity(item.cartItemKey || item._id, (item.quantity || 1) + 1)}>+</button>
+                  <button onClick={() => removeFromCart(item.cartItemKey || item._id)}>Remove</button>
                 </div>
               </div>
               <div className="cart-item-total">

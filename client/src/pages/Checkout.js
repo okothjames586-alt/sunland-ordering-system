@@ -51,7 +51,7 @@ const Checkout = () => {
           description: item.description,
           image: item.image,
           quantity: item.quantity,
-          specialInstructions: item.specialInstructions || ''
+          specialInstructions: item.variant ? `Variant: ${item.variant}` : item.specialInstructions || ''
         })),
         deliveryAddress: address,
         paymentMethod,
