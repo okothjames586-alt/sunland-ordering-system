@@ -21,6 +21,13 @@ import sodaImage from '../assets/soda.jpg';
 import afiaImage from '../assets/afia.png';
 import monsterImage from '../assets/monster.jfif';
 import redbullImage from '../assets/redbull.jfif';
+import bestCreamImage from '../assets/best_cream.webp';
+import baileysCreamImage from '../assets/baileys_cream.jpg';
+import gordonsGinImage from '../assets/gordons_gin.jpg';
+import chivasRegalImage from '../assets/chivas_regal_12yrs.jpg';
+import williamLawsonsImage from '../assets/william_lawsons.jpg';
+import predatorImage from '../assets/predator.jfif';
+import powerPlayImage from '../assets/power_play.jpeg';
 import dasaniWaterImage from '../assets/dasani_water.webp';
 import dasaniImage from '../assets/dasani.webp';
 import keringetImage from '../assets/keringet.jfif';
@@ -49,6 +56,7 @@ import grantsImage from '../assets/grants.jpg';
 import jackDanielsImage from '../assets/jack_daniels.jpg';
 import martellVsImage from '../assets/martell_vs.jpg';
 import ballantinesImage from '../assets/ballantines.jpg';
+import hennessyImage from '../assets/hennessy.jfif';
 import amarulaImage from '../assets/amarula.jpg';
 import glenfiddichImage from '../assets/glenfiddich.jpg';
 import viceroyImage from '../assets/viceroy.jpg';
@@ -85,6 +93,8 @@ const Menu = () => {
     { _id: 21, category: 'Soft Drinks', name: 'Afia', description: 'Fresh Juice', price: 100, image: afiaImage },
     { _id: 22, category: 'Soft Drinks', name: 'Monster', description: 'Energy drink', price: 300, image: monsterImage },
     { _id: 23, category: 'Soft Drinks', name: 'RedBull', description: 'Energy drink', price: 300, image: redbullImage },
+    { _id: 69, category: 'Soft Drinks', name: 'Predator', description: 'Energy drink', price: 100, image: predatorImage },
+    { _id: 70, category: 'Soft Drinks', name: 'Power Play', description: 'Energy drink', price: 100, image: powerPlayImage },
     { _id: 24, category: 'Soft Drinks', name: 'Dasani 500Ml', description: 'Pure Bottled water', price: 50, image: dasaniWaterImage },
     { _id: 25, category: 'Soft Drinks', name: 'Dasani 1L', description: 'Pure bottled water', price: 100, image: dasaniImage },
     { _id: 26, category: 'Soft Drinks', name: 'Keringet 500Ml', description: 'Chilled mineral water', price: 100, image: keringetImage },
@@ -117,19 +127,25 @@ const Menu = () => {
     { _id: 52, category: 'Liquor', name: 'Jack Daniels 3/4', description: 'Tennessee whiskey', price: 4000, image: jackDanielsImage },
     { _id: 53, category: 'Liquor', name: 'Martell VS 700ml', description: 'Fine cognac', price: 7000, image: martellVsImage },
     { _id: 54, category: 'Liquor', name: 'Martell VS 1L', description: 'Fine cognac', price: 7800, image: martellVsImage },
-    { _id: 55, category: 'Liquor', name: 'Hennessy', description: 'Premium cognac', price: 6500, image: martellVsImage },
+    { _id: 55, category: 'Liquor', name: 'Hennessy', description: 'Premium cognac', price: 6500, image: hennessyImage },
     { _id: 56, category: 'Liquor', name: 'Glenfiddich 12yrs 750ml', description: 'Single malt whisky', price: 8500, image: glenfiddichImage },
     { _id: 57, category: 'Liquor', name: 'Glenfiddich 15yrs 750ml', description: 'Single malt whisky', price: 12000, image: glenfiddichImage },
     { _id: 58, category: 'Liquor', name: 'Ballantines', description: 'Blended Scotch whisky', price: 3500, image: ballantinesImage },
-    { _id: 60, category: 'Liquor', name: 'Amarula 750ml', description: 'Cream liqueur', price: 3000, image: amarulaImage },
-    { _id: 61, category: 'Liquor', name: 'Viceroy 3/4', description: 'Blended whisky', price: 1650, image: viceroyImage },
-    { _id: 62, category: 'Liquor', name: 'Black and White 3/4', description: 'Blended whisky', price: 1500, image: blackAndWhiteImage },
-    { _id: 63, category: 'Liquor', name: 'VAT 69 3/4', description: 'Blended whisky', price: 1900, image: `${publicUrl}/images/VAT-69.jfif` },
-    { _id: 64, category: 'Liquor', name: 'VAT 69 1L', description: 'Blended whisky', price: 3000, image: `${publicUrl}/images/VAT-69.jfif` },
-    { _id: 65, category: 'Liquor', name: 'Singleton 12 Years', description: 'Single malt whisky', price: 6500, image: `${publicUrl}/images/singleton-12-years.avif` },
-    { _id: 66, category: 'Liquor', name: 'Richot 3/4', description: 'Blended whisky', price: 1600, image: richotImage },
-    { _id: 67, category: 'Liquor', name: 'Hunters Choice 3/4', description: 'Blended whisky', price: 1300, image: huntersChoiceImage },
-    { _id: 68, category: 'Liquor', name: 'Captain Morgan 3/4', description: 'Spiced rum', price: 1300, image: captainMorganImage },
+    { _id: 59, category: 'Liquor', name: 'Best Cream 750ml', description: 'Cream liqueur', price: 1500, image: bestCreamImage },
+    { _id: 60, category: 'Liquor', name: 'Bailey\'s Cream 750ml', description: 'Cream liqueur', price: 3000, image: baileysCreamImage },
+    { _id: 61, category: 'Liquor', name: 'Gordon\'s Gin 1L', description: 'Dry gin', price: 3200, image: gordonsGinImage },
+    { _id: 62, category: 'Liquor', name: 'Gordon\'s Gin 750ml', description: 'Dry gin', price: 2500, image: gordonsGinImage },
+    { _id: 63, category: 'Liquor', name: 'Chivas Regal 12yrs', description: 'Premium blended Scotch', price: 5000, image: chivasRegalImage },
+    { _id: 64, category: 'Liquor', name: 'William Lawsons 750ml', description: 'Blended whisky', price: 2500, image: williamLawsonsImage },
+    { _id: 65, category: 'Liquor', name: 'Amarula 750ml', description: 'Cream liqueur', price: 3000, image: amarulaImage },
+    { _id: 66, category: 'Liquor', name: 'Viceroy 3/4', description: 'Blended whisky', price: 1650, image: viceroyImage },
+    { _id: 67, category: 'Liquor', name: 'Black and White 3/4', description: 'Blended whisky', price: 1500, image: blackAndWhiteImage },
+    { _id: 68, category: 'Liquor', name: 'VAT 69 3/4', description: 'Blended whisky', price: 1900, image: `${publicUrl}/images/VAT-69.jfif` },
+    { _id: 71, category: 'Liquor', name: 'VAT 69 1L', description: 'Blended whisky', price: 3000, image: `${publicUrl}/images/VAT-69.jfif` },
+    { _id: 72, category: 'Liquor', name: 'Singleton 12 Years', description: 'Single malt whisky', price: 6500, image: `${publicUrl}/images/singleton-12-years.avif` },
+    { _id: 73, category: 'Liquor', name: 'Richot 3/4', description: 'Blended whisky', price: 1600, image: richotImage },
+    { _id: 74, category: 'Liquor', name: 'Hunters Choice 3/4', description: 'Blended whisky', price: 1300, image: huntersChoiceImage },
+    { _id: 75, category: 'Liquor', name: 'Captain Morgan 3/4', description: 'Spiced rum', price: 1300, image: captainMorganImage },
   ]);
 
   const addToCart = useCartStore((state) => state.addToCart);
