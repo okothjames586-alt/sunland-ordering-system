@@ -1,6 +1,6 @@
 {
-  "short_name": "Sunland Ordering",
-  "name": "Sunland Ordering App",
+  "short_name": "SWG",
+  "name": "SWG",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#3A8B3A",
+  "background_color": "#F4D03F"
 }

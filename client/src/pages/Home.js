@@ -11,9 +11,9 @@ const Home = () => {
       <div className="hero-section">
         <div className="hero-content">
           <div className="brand-logo">
-            <div className="logo-circle">🍴</div>
+            <div className="logo-circle">SWG</div>
             <div className="logo-text">
-              <h1 className="brand-name">Sunland <span className="brand-highlight">Bites</span></h1>
+              <h1 className="brand-name">Sunland<span className="brand-highlight">Bites</span></h1>
               <p className="brand-tagline">Sunland Woodvale Gardens. <span className="highlight">Located Along Kalandin-Kamito Higway, Siaya</span></p>
             </div>
           </div>

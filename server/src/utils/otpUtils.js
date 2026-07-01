@@ -3,9 +3,9 @@ export const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-// Generate OTP expiry time (10 minutes from now)
+// Generate OTP expiry time (5 minutes from now)
 export const generateOTPExpiry = () => {
-  return new Date(Date.now() + 10 * 60 * 1000);
+  return new Date(Date.now() + 5 * 60 * 1000);
 };
 
 // Verify OTP

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../context/cartStore';
 import { orderAPI } from '../services/api';
 import { toast } from 'react-toastify';
+import CheckoutStatusCard from '../components/CheckoutStatusCard';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -152,6 +153,13 @@ const Checkout = () => {
             rows={2}
           />
         </div>
+
+        <CheckoutStatusCard
+          paymentStatus="pending"
+          paymentMethod={paymentMethod}
+          transactionId=""
+          otpVerified={false}
+        />
 
         <div className="order-summary">
           <h2>Order Summary</h2>

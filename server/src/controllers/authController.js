@@ -66,7 +66,7 @@ export const registerRequest = async (req, res) => {
     const emailResult = await sendOTPEmail(email, otp, name);
 
     // Send OTP via SMS (may be a no-op if Twilio not configured)
-    const smsResult = await sendSMS(phone, `Your Sunland Bites OTP is: ${otp}. Valid for 10 minutes.`);
+    const smsResult = await sendSMS(normalizedPhone, `Your Sunland verification code is ${otp}`);
 
     const resp = {
       message: 'OTP processed (email/sms status included)',
@@ -208,7 +208,7 @@ export const loginRequest = async (req, res) => {
     }
 
     // Send OTP via SMS (best-effort)
-    const smsResult = await sendSMS(user.phone, `Your Sunland Bites login OTP is: ${otp}. Valid for 10 minutes.`);
+    const smsResult = await sendSMS(user.phone, `Your Sunland verification code is ${otp}`);
 
     const resp = {
       message: 'OTP processed (email/sms status included)',
@@ -314,7 +314,7 @@ export const resendOTP = async (req, res) => {
 
     // Send OTP via email and SMS
     const emailResult = await sendOTPEmail(user.email, otp, user.name);
-    const smsResult = await sendSMS(user.phone, `Your Sunland Bites OTP is: ${otp}. Valid for 10 minutes.`);
+    const smsResult = await sendSMS(user.phone, `Your Sunland verification code is ${otp}`);
 
     const resp = {
       message: 'OTP resent (email/sms status included)',
@@ -370,7 +370,7 @@ export const forgotPasswordRequest = async (req, res) => {
     }
 
     // Send OTP via SMS
-    const smsResult = await sendSMS(user.phone, `Your Sunland Bites password reset OTP is: ${otp}. Valid for 10 minutes.`);
+    const smsResult = await sendSMS(user.phone, `Your Sunland verification code is ${otp}`);
 
     const resp = {
       message: 'OTP processed (email/sms status included)',

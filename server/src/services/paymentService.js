@@ -4,9 +4,10 @@ const MPESA_API_URL = process.env.MPESA_API_URL || 'https://api.safaricom.co.ke/
 const MPESA_OAUTH_URL = process.env.MPESA_OAUTH_URL || 'https://api.safaricom.co.ke/oauth/v1/generate';
 const MPESA_CALLBACK_URL = process.env.MPESA_CALLBACK_URL || `${process.env.API_URL || 'https://sunland-ordering-system.onrender.com'}/api/payments/callback`;
 const AIRTEL_API_URL = process.env.AIRTEL_API_URL || 'https://api.airtel.africa';
-const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || '';
+const MPESA_SHORTCODE = process.env.MPESA_SHORTCODE || process.env.MPESA_BUSINESS_SHORT_CODE || '';
+const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || process.env.MPESA_SHORTCODE || '';
 // Buy Goods number (shortcode/till) to use for Customer Buy Goods transactions
-const BUY_GOODS_NUMBER = process.env.MPESA_BUY_GOODS_NUMBER || '9986957';
+const BUY_GOODS_NUMBER = process.env.MPESA_BUY_GOODS_NUMBER || '';
 const MPESA_PASSKEY = process.env.MPESA_PASSKEY || '';
 const MPESA_CONSUMER_KEY = process.env.MPESA_CONSUMER_KEY || '3oj5PVvsQGg9ES8zFbEqULK4aEH2L9rOixpftrc4IFtuwIGZ';
 const MPESA_CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET || 'uLjJAKTZNOnQwQZe93NVUrvopFJUIG8S6ylcsHzNKdeCkiuzjc1QUJlAKnXAwePF';
@@ -15,6 +16,19 @@ const AIRTEL_API_KEY = process.env.AIRTEL_API_KEY || '';
 // Cache for access tokens
 let mpesaAccessToken = null;
 let mpesaTokenExpiry = null;
+
+const normalizePhoneNumber = (phoneNumber) => {
+  if (!phoneNumber) return '';
+
+  const digits = String(phoneNumber).trim().replace(/\D/g, '');
+  if (!digits) return '';
+
+  if (digits.startsWith('254')) return digits;
+  if (digits.startsWith('0')) return `254${digits.slice(1)}`;
+  if (digits.startsWith('7')) return `254${digits}`;
+
+  return digits;
+};
 
 /**
  * Get M-Pesa access token using consumer key and secret
@@ -85,21 +99,27 @@ export const generateMpesaAccessToken = async (forceRefresh = false) => {
 
 export const initiateMpesaPayment = async (phoneNumber, amount, orderId) => {
   try {
+    const normalizedPhone = normalizePhoneNumber(phoneNumber);
+    if (!normalizedPhone) {
+      throw new Error('Invalid phone number for M-Pesa STK push');
+    }
+
     // Get access token
     const accessToken = await getMpesaAccessToken();
-    
+
     const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
+    const shortCode = BUSINESS_SHORT_CODE || BUY_GOODS_NUMBER || MPESA_SHORTCODE;
 
     const response = await axios.post(`${MPESA_API_URL}/stkpush/v1/processrequest`, {
-      BusinessShortCode: BUY_GOODS_NUMBER || BUSINESS_SHORT_CODE,
+      BusinessShortCode: shortCode,
       Password: MPESA_PASSKEY,
       Timestamp: timestamp,
       // Use Buy Goods transaction type so customer receives the STK push
       TransactionType: 'CustomerBuyGoodsOnline',
       Amount: Math.round(amount),
-      PartyA: phoneNumber,
-      PartyB: BUY_GOODS_NUMBER || BUSINESS_SHORT_CODE,
-      PhoneNumber: phoneNumber,
+      PartyA: normalizedPhone,
+      PartyB: shortCode,
+      PhoneNumber: normalizedPhone,
       CallBackURL: MPESA_CALLBACK_URL,
       AccountReference: orderId,
       TransactionDesc: `Order ${orderId}`

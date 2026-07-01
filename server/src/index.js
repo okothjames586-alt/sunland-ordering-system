@@ -88,6 +88,17 @@ app.use('/api/users', userRoutes);
 app.use('/api/menus', menuRoutes);
 app.use('/api/orders', authMiddleware, orderRoutes);
 app.post('/api/payments/callback', paymentController.paymentCallback);
+app.post('/api/payment/callback', paymentController.paymentCallback);
+app.post('/api/payment/stkpush', async (req, res) => {
+  try {
+    const { phone, amount, orderId } = req.body;
+    const { initiateMpesaPayment } = await import('./services/paymentService.js');
+    const result = await initiateMpesaPayment(phone, amount, orderId);
+    res.json({ success: true, message: 'STK push initiated', ...result });
+  } catch (error) {
+    res.status(500).json({ error: error.message || 'Failed to initiate STK push' });
+  }
+});
 app.use('/api/payments', authMiddleware, paymentRoutes);
 app.use('/api/admin', adminRoutes);
 

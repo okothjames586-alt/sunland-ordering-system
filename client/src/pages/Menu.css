@@ -29,8 +29,20 @@
 
 .menu-items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.75rem;
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+  gap: 1.4rem;
+}
+
+@media (max-width: 920px) {
+  .menu-items {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .menu-items {
+    grid-template-columns: 1fr;
+  }
 }
 
 .menu-item {

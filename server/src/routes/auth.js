@@ -14,4 +14,9 @@ router.post('/forgot-password-request', authController.forgotPasswordRequest);
 router.post('/forgot-password-verify', authController.forgotPasswordVerify);
 router.post('/reset-password-confirm', authController.resetPasswordConfirm);
 
+// Compatibility aliases for the mobile app endpoints
+router.post('/send-otp', authController.registerRequest);
+router.post('/verify-otp', authController.registerVerify);
+router.post('/resend-otp', authController.resendOTP);
+
 export default router;
