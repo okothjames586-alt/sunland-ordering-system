@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-const MPESA_API_URL = process.env.MPESA_API_URL || 'https://api.safaricom.co.ke/mpesa';
-const MPESA_OAUTH_URL = process.env.MPESA_OAUTH_URL || 'https://api.safaricom.co.ke/oauth/v1/generate';
-const MPESA_CALLBACK_URL = process.env.MPESA_CALLBACK_URL || `${process.env.API_URL || 'https://sunland-ordering-system.onrender.com'}/api/payments/callback`;
-const AIRTEL_API_URL = process.env.AIRTEL_API_URL || 'https://api.airtel.africa';
-const MPESA_SHORTCODE = process.env.MPESA_SHORTCODE || process.env.MPESA_BUSINESS_SHORT_CODE || '';
-const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || process.env.MPESA_SHORTCODE || '';
+const MPESA_API_URL = process.env.MPESA_API_URL;
+const MPESA_OAUTH_URL = process.env.MPESA_OAUTH_URL;
+const MPESA_CALLBACK_URL = process.env.MPESA_CALLBACK_URL;
+const AIRTEL_API_URL = process.env.AIRTEL_API_URL;
+const MPESA_SHORTCODE = process.env.MPESA_SHORTCODE || process.env.MPESA_BUSINESS_SHORT_CODE;
+const BUSINESS_SHORT_CODE = process.env.MPESA_BUSINESS_SHORT_CODE || process.env.MPESA_SHORTCODE;
 // Buy Goods number (shortcode/till) to use for Customer Buy Goods transactions
-const BUY_GOODS_NUMBER = process.env.MPESA_BUY_GOODS_NUMBER || '';
-const MPESA_PASSKEY = process.env.MPESA_PASSKEY || '';
-const MPESA_CONSUMER_KEY = process.env.MPESA_CONSUMER_KEY || '3oj5PVvsQGg9ES8zFbEqULK4aEH2L9rOixpftrc4IFtuwIGZ';
-const MPESA_CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET || 'uLjJAKTZNOnQwQZe93NVUrvopFJUIG8S6ylcsHzNKdeCkiuzjc1QUJlAKnXAwePF';
-const AIRTEL_API_KEY = process.env.AIRTEL_API_KEY || '';
+const BUY_GOODS_NUMBER = process.env.MPESA_BUY_GOODS_NUMBER;
+const MPESA_PASSKEY = process.env.MPESA_PASSKEY;
+const MPESA_CONSUMER_KEY = process.env.MPESA_CONSUMER_KEY;
+const MPESA_CONSUMER_SECRET = process.env.MPESA_CONSUMER_SECRET;
+const AIRTEL_API_KEY = process.env.AIRTEL_API_KEY;
 
 // Cache for access tokens
 let mpesaAccessToken = null;
@@ -110,9 +110,13 @@ export const initiateMpesaPayment = async (phoneNumber, amount, orderId) => {
     const timestamp = new Date().toISOString().replace(/[^0-9]/g, '').slice(0, 14);
     const shortCode = BUSINESS_SHORT_CODE || BUY_GOODS_NUMBER || MPESA_SHORTCODE;
 
+    const password = Buffer.from(
+      `${shortCode}${MPESA_PASSKEY}${timestamp}`
+    ).toString('base64');
+
     const response = await axios.post(`${MPESA_API_URL}/stkpush/v1/processrequest`, {
       BusinessShortCode: shortCode,
-      Password: MPESA_PASSKEY,
+      Password: password,
       Timestamp: timestamp,
       // Use Buy Goods transaction type so customer receives the STK push
       TransactionType: 'CustomerBuyGoodsOnline',

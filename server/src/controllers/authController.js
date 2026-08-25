@@ -334,85 +334,62 @@ export const resendOTP = async (req, res) => {
   }
 };
 
-// Forgot Password - Step 1: Request password reset OTP
+// Forgot Password - Step 1: Start a password reset session without OTP
 export const forgotPasswordRequest = async (req, res) => {
   try {
-    const { phone, email } = req.body;
+    const { phone, email, identifier } = req.body || {};
+    const suppliedIdentifier = (identifier || email || phone || '').trim();
 
-    if (!phone && !email) {
-      return res.status(400).json({ error: 'Please provide phone or email' });
+    if (!suppliedIdentifier) {
+      return res.status(400).json({ error: 'Please provide your email or phone number' });
     }
 
-    // Find user by phone or email
     let user = null;
-    if (phone) {
-      user = await User.findOne({ phone });
+    if (suppliedIdentifier.includes('@')) {
+      const normalizedEmail = suppliedIdentifier.toLowerCase();
+      const escapedEmail = escapeRegex(normalizedEmail);
+      user = await User.findOne({ email: { $regex: `^${escapedEmail}$`, $options: 'i' } });
     } else {
-      user = await User.findOne({ email });
+      const normalizedPhone = suppliedIdentifier.replace(/[\s\-\(\)]/g, '');
+      user = await User.findOne({ phone: normalizedPhone }) || await User.findOne({ phone: suppliedIdentifier });
     }
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found with provided credentials' });
+      return res.status(404).json({ error: 'No account found with that email or phone number' });
     }
 
-    // Generate and save password reset OTP
-    const otp = generateOTP();
-    const otpExpiry = generateOTPExpiry();
+    const token = jwt.sign(
+      { userId: user._id, type: 'password-reset' },
+      getJwtSecret(),
+      { expiresIn: '15m' }
+    );
 
-    user.passwordResetOTP = otp;
-    user.passwordResetOTPExpiry = otpExpiry;
-    await user.save();
-
-    // Send OTP via email
-    let emailResult = { success: false, error: 'no-email' };
-    if (user.email) {
-      emailResult = await sendOTPEmail(user.email, otp, user.name, 'password reset');
-    }
-
-    // Send OTP via SMS
-    const smsResult = await sendSMS(user.phone, `Your Sunland verification code is ${otp}`);
-
-    const resp = {
-      message: 'OTP processed (email/sms status included)',
+    res.status(200).json({
+      message: 'Password reset session started. No OTP required.',
+      token,
       userId: user._id,
       maskedEmail: user.email ? user.email.replace(/(.{2})(.*)(@.*)/, '$1****$3') : undefined,
-      maskedPhone: user.phone ? user.phone.slice(-4).padStart(user.phone.length, '*') : undefined,
-      emailResult,
-      smsResult
-    };
-
-    if (process.env.DEBUG_RETURN_OTP === 'true') {
-      resp.debugOTP = otp;
-    }
-
-    res.status(200).json(resp);
+      maskedPhone: user.phone ? user.phone.slice(-4).padStart(user.phone.length, '*') : undefined
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Forgot Password - Step 2: Verify OTP for password reset
+// Forgot Password - Step 2: Create a reset token without any OTP check
 export const forgotPasswordVerify = async (req, res) => {
   try {
-    const { userId, otp } = req.body;
+    const { userId } = req.body || {};
 
-    if (!userId || !otp) {
-      return res.status(400).json({ error: 'Please provide userId and OTP' });
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
     }
 
-    // Find user
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Verify OTP
-    const otpVerification = verifyOTP(user.passwordResetOTP, otp, user.passwordResetOTPExpiry);
-    if (!otpVerification.isValid) {
-      return res.status(401).json({ error: otpVerification.message });
-    }
-
-    // Generate temporary token for password reset (valid for 15 minutes)
     const token = jwt.sign(
       { userId: user._id, type: 'password-reset' },
       getJwtSecret(),
@@ -420,7 +397,7 @@ export const forgotPasswordVerify = async (req, res) => {
     );
 
     res.json({
-      message: 'OTP verified successfully',
+      message: 'Password reset session started. No OTP required.',
       token,
       userId: user._id
     });
@@ -432,33 +409,37 @@ export const forgotPasswordVerify = async (req, res) => {
 // Reset Password - Step 3: Confirm new password
 export const resetPasswordConfirm = async (req, res) => {
   try {
-    const { password } = req.body;
+    const { password, userId } = req.body;
     const authHeader = req.headers.authorization;
 
     if (!password) {
       return res.status(400).json({ error: 'Please provide new password' });
     }
 
+    let targetUserId = userId;
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ error: 'Missing or invalid authorization token' });
-    }
+    } else {
+      const token = authHeader.substring(7);
 
-    const token = authHeader.substring(7);
+      // Verify token
+      let decoded;
+      try {
+        decoded = jwt.verify(token, getJwtSecret());
+      } catch (err) {
+        return res.status(401).json({ error: 'Invalid or expired reset token' });
+      }
 
-    // Verify token
-    let decoded;
-    try {
-      decoded = jwt.verify(token, getJwtSecret());
-    } catch (err) {
-      return res.status(401).json({ error: 'Invalid or expired reset token' });
-    }
+      if (decoded.type !== 'password-reset') {
+        return res.status(401).json({ error: 'Invalid token type' });
+      }
 
-    if (decoded.type !== 'password-reset') {
-      return res.status(401).json({ error: 'Invalid token type' });
+      targetUserId = decoded.userId;
     }
 
     // Find user
-    const user = await User.findById(decoded.userId);
+    const user = await User.findById(targetUserId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }

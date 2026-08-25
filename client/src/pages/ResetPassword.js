@@ -87,7 +87,7 @@ const ResetPassword = () => {
 
       const response = await api.post(
         '/auth/reset-password-confirm',
-        { password },
+        { password, userId },
         {
           headers: {
             Authorization: `Bearer ${token}`

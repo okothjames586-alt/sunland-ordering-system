@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">SWG</string>
-    <string name="title_activity_main">SWG</string>
-    <string name="package_name">com.sunlandbites</string>
-    <string name="custom_url_scheme">com.sunlandbites</string>
+    <string name="app_name">Sunland Bites</string>
+    <string name="title_activity_main">Sunland Bites</string>
+    <string name="package_name">com.sunland.ordering</string>
+    <string name="custom_url_scheme">com.sunland.ordering</string>
 </resources>

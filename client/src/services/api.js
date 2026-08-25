@@ -45,7 +45,10 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) {
+  // Only set the Authorization header from stored auth token when
+  // the request did not already include an explicit Authorization header.
+  if (token && !(config.headers && config.headers.Authorization)) {
+    config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
@@ -54,7 +57,8 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const isPasswordResetRequest = error.config?.url?.includes('/auth/reset-password-confirm');
+    if (error.response?.status === 401 && !isPasswordResetRequest) {
       localStorage.removeItem('token');
       window.location.href = '/login';
     }

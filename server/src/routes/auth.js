@@ -9,14 +9,10 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 router.post('/refresh-token', authController.refreshToken);
 
-// Password reset endpoints still use OTP for security
+// Password reset endpoints
+// OTP is not required for password reset; users can request a reset token directly.
 router.post('/forgot-password-request', authController.forgotPasswordRequest);
 router.post('/forgot-password-verify', authController.forgotPasswordVerify);
 router.post('/reset-password-confirm', authController.resetPasswordConfirm);
-
-// Compatibility aliases for the mobile app endpoints
-router.post('/send-otp', authController.registerRequest);
-router.post('/verify-otp', authController.registerVerify);
-router.post('/resend-otp', authController.resendOTP);
 
 export default router;

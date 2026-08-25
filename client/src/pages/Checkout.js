@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../context/cartStore';
 import { orderAPI } from '../services/api';
 import { toast } from 'react-toastify';
-import CheckoutStatusCard from '../components/CheckoutStatusCard';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -109,7 +108,7 @@ const Checkout = () => {
                 onChange={(e) => setPaymentPhone(e.target.value)}
                 placeholder="Enter mobile money phone number"
               />
-              <small>The payment provider will send a push notification to this number.</small>
+              <small>The payment provider will send an M-Pesa push notification to this number.</small>
             </div>
           </>
         )}
@@ -153,13 +152,6 @@ const Checkout = () => {
             rows={2}
           />
         </div>
-
-        <CheckoutStatusCard
-          paymentStatus="pending"
-          paymentMethod={paymentMethod}
-          transactionId=""
-          otpVerified={false}
-        />
 
         <div className="order-summary">
           <h2>Order Summary</h2>
